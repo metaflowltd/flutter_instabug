@@ -1,0 +1,34 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutter_instabug (0.0.1):
+    - Flutter
+    - Instabug
+  - Instabug (7.8):
+    - Instabug/Instabug (= 7.8)
+    - Instabug/InstabugCore (= 7.8)
+  - Instabug/Instabug (7.8):
+    - Instabug/InstabugCore
+  - Instabug/InstabugCore (7.8)
+
+DEPENDENCIES:
+  - Flutter (from `.symlinks/flutter/ios`)
+  - flutter_instabug (from `.symlinks/plugins/flutter_instabug/ios`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Instabug
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+  flutter_instabug:
+    :path: ".symlinks/plugins/flutter_instabug/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  flutter_instabug: 12ec649f2e2d750ba5cf2ec175b7af7e49fd77e4
+  Instabug: 51b8f0502289c3ec3e2e66672a988d3fe6ab563a
+
+PODFILE CHECKSUM: 7765ea4305eaab0b3dfd384c7de11902aa3195fd
+
+COCOAPODS: 1.5.2
