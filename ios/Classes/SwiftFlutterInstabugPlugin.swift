@@ -31,6 +31,8 @@ public class SwiftFlutterInstabugPlugin: NSObject, FlutterPlugin {
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         if call.method == "startInstabug" {
             self.startInstabug(call, result: result)
+        }else if call.method == "identifyUser"{
+            self.identifyUser(call, result: result)
         }else{
             result(FlutterMethodNotImplemented)
         }
@@ -53,7 +55,24 @@ public class SwiftFlutterInstabugPlugin: NSObject, FlutterPlugin {
         }
         
         Instabug.start(withToken: token, invocationEvent: invocationEvent)
-        result("Instabug started ")
+        result("Instabug started")
+    }
+    
+    private func identifyUser(_ call: FlutterMethodCall, result: @escaping FlutterResult){
+        guard let params = call.arguments as? Dictionary<String,String> else {
+            result(FlutterError(code: "Missing arguments", message: nil, details: nil))
+            return
+        }
+        
+        guard let email = params["email"] else {
+            result(FlutterError(code: "Missing arguments", message: "Missing user email", details: nil))
+            return
+        }
+        
+        let name = params["name"]
+        Instabug.identifyUser(withEmail: email, name: name)
+        
+        result("Instabug user identified")
     }
     
 }

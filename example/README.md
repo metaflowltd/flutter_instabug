@@ -1,8 +1,21 @@
-# flutter_instabug_example
+# flutter_instabug_plugin
 
-Demonstrates how to use the flutter_instabug plugin.
+Flutter plugin for Instabug.
 
-## Getting Started
+## Setup
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+Import:
+``` dart
+import 'package:flutter_instabug/flutter_instabug.dart';
+```
+
+Start:
+``` dart
+FlutterInstabug.startInstabug("<INSTABUG APP TOKEN>",
+           invocationEvent: IBGInvocationEvent.screenshot);
+```
+
+Identify user (optional):
+``` dart
+FlutterInstabug.identifyUser("john.doe@example.com", userName: "John Doe");
+```

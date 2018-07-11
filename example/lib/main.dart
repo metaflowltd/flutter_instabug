@@ -12,7 +12,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  String _initInstabugResponse = 'Unknown';
+
+  String _identifyResponse = "";
 
   @override
   void initState() {
@@ -20,20 +22,34 @@ class _MyAppState extends State<MyApp> {
     initInstabug();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initInstabug() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
+    String initResponse;
     try {
-      platformVersion = await FlutterInstabug.startInstabug("<INSTABUG APP TOKEN>");
+      initResponse =
+          await FlutterInstabug.startInstabug("<INSTABUG APP TOKEN>", invocationEvent: IBGInvocationEvent.screenshot);
     } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+      initResponse = 'Failed to init Instabug.';
     }
 
     if (!mounted) return;
 
     setState(() {
-      _platformVersion = platformVersion;
+      _initInstabugResponse = initResponse;
+    });
+  }
+
+  Future<void> identifyInstabugUser() async {
+    String identifyResponse;
+    try {
+      identifyResponse = await FlutterInstabug.identifyUser("john.doe@example.com", userName: "John Doe");
+    } on PlatformException {
+      identifyResponse = 'Failed to identify user on Instabug.';
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      _identifyResponse = identifyResponse;
     });
   }
 
@@ -42,10 +58,17 @@ class _MyAppState extends State<MyApp> {
     return new MaterialApp(
       home: new Scaffold(
         appBar: new AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Instabug Plugin Example'),
         ),
-        body: new Center(
-          child: new Text('Running on: $_platformVersion\n'),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('$_initInstabugResponse'),
+              RaisedButton(child: Text("Identify user on Instabug"), onPressed: identifyInstabugUser),
+              Text('$_identifyResponse\n'),
+            ],
+          ),
         ),
       ),
     );
