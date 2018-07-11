@@ -24,13 +24,10 @@ class FlutterInstabugPlugin: MethodCallHandler {
   }
 
   override fun onMethodCall(call: MethodCall, result: Result) {
-    if (call.method == "initInstabug") {
-      Instabug.Builder(app!!, "77f1665e44b0517abb069ba762bad3c9")
-              .setInvocationEvents(InstabugInvocationEvent.SHAKE, InstabugInvocationEvent.SCREENSHOT_GESTURE)
-              .build()
-      result.success("Instabug init")
-    } else {
-      result.notImplemented()
+    when {
+        call.method == "startInstabug" -> result.success("Instabug init")
+        call.method == "identifyUser" -> result.success("Instabug user identified")
+        else -> result.notImplemented()
     }
   }
 
