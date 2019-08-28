@@ -33,8 +33,23 @@ public class SwiftFlutterInstabugPlugin: NSObject, FlutterPlugin {
             self.startInstabug(call, result: result)
         }else if call.method == "identifyUser"{
             self.identifyUser(call, result: result)
-        }else{
+        }else if (call.method == "isOn") {
+            guard let  params = call.arguments as? Dictionary<String, Bool> else {
+                result(FlutterError(code: "Missing arguments", message: nil, details: nil))
+                return
+            }
+            let turnOn = params["isOn"]
+            self.turnOnInstabug(turnOn: turnOn ?? true)
+        } else{
             result(FlutterMethodNotImplemented)
+        }
+    }
+    
+    private func turnOnInstabug(turnOn: Bool) {
+        if turnOn {
+            Instabug.dismiss()
+        } else {
+            
         }
     }
     
