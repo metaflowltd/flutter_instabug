@@ -25,4 +25,12 @@ class FlutterInstabug {
     }
     return await _channel.invokeMethod('identifyUser', params);
   }
+
+  static Future<String> isOn(bool turnOn) async {
+    Map<String, bool> params = {
+      "isOn" : turnOn
+    };
+
+    return await _channel.invokeMethod('isOn', params);
+  }
 }
