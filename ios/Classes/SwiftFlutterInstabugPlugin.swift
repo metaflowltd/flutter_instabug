@@ -2,6 +2,7 @@ import Flutter
 import UIKit
 import Instabug
 
+
 extension IBGInvocationEvent{
     static func fromString(invocationEventString:String) -> IBGInvocationEvent {
         switch invocationEventString{
@@ -31,9 +32,17 @@ public class SwiftFlutterInstabugPlugin: NSObject, FlutterPlugin {
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         if call.method == "startInstabug" {
             self.startInstabug(call, result: result)
-        }else if call.method == "identifyUser"{
+        } else if call.method == "identifyUser"{
             self.identifyUser(call, result: result)
-        }else{
+        } else if (call.method == "isOn") {
+            guard let  params = call.arguments as? Dictionary<String, Bool> else {
+                result(FlutterError(code: "Missing arguments", message: nil, details: nil))
+                return
+            }
+            let turnOn = params["isOn"] ?? true
+            if turnOn { Instabug.setInvocationEvent(IBGInvocationEvent.screenshot) } else { Instabug.setInvocationEvent(IBGInvocationEvent.none) }
+            
+        } else{
             result(FlutterMethodNotImplemented)
         }
     }
